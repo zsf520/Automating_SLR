@@ -5,7 +5,7 @@ def format_keyword(keyword):
     else:
         return f"{keyword}*"
 
-def find_and_print_synonym_groups():
+def query():
     synonym_groups = []
 
     while True:
@@ -26,6 +26,3 @@ def find_and_print_synonym_groups():
         print(" AND ".join(synonym_groups))
     else:
         print("No input query found.")
-
-if __name__ == "__main__":
-    find_and_print_synonym_groups()

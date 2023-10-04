@@ -128,16 +128,3 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
                     duplicate_count += 1
 
     print(f"Detected and removed {duplicate_count} duplicate entries.")
-
-if __name__ == "__main__":
-    # 指定BibTeX文件所在文件夹
-    bib_folder = './bibfiles'
-
-    # 获取文件夹内所有的bib文件
-    bib_files = list_bib_files(bib_folder)
-
-    # 指定输出的CSV文件路径
-    output_csv = 'output.csv'
-
-    # 调用处理函数，去重并生成CSV，并应用过滤条件
-    bib_to_csv(bib_files, output_csv)
