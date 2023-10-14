@@ -19,3 +19,5 @@ if __name__ == "__main__":
 
     # Call the processing function, remove duplicates and generate CSV, and apply filtering conditions
     bib_to_csv(bib_files, output_csv)
+
+    input("\nPress 'ENTER' to exit...")
