@@ -1,6 +1,6 @@
 import bibtexparser
 import csv
-from filter import *
+from modules.filter import *
 
 
 def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, publication_types=None):

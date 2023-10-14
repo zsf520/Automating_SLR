@@ -1,4 +1,4 @@
-from bibread import *
+from modules.bibread import *
 
 
 def map_entry_type(entry_type):
