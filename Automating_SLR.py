@@ -1,20 +1,21 @@
-from bibread import*
-from query import*
+from query import *
+from bib_to_csv import *
 
 if __name__ == "__main__":
     query()
 
-    # 暂停并等待用户输入
-    input("press Enter to continue")
+    # Pause and wait for user input
+    input("\nCopy Query to search in ODLs, export the results as BibTex files, and put the BibTex files into the "
+          "‘bibfiles’ folder, then press Enter to continue")
 
-    # 指定BibTeX文件所在文件夹
+    # Specify the folder where the BibTeX file is located
     bib_folder = './bibfiles'
 
-    # 获取文件夹内所有的bib文件
+    # Get all bib files in the folder
     bib_files = list_bib_files(bib_folder)
 
-    # 指定输出的CSV文件路径
-    output_csv = 'output.csv'
+    # Specify the output CSV file path
+    output_csv = './output/output.csv'
 
-    # 调用处理函数，去重并生成CSV，并应用过滤条件
+    # Call the processing function, remove duplicates and generate CSV, and apply filtering conditions
     bib_to_csv(bib_files, output_csv)

@@ -1,28 +1,34 @@
 def format_keyword(keyword):
-    # 如果关键词是词组，用引号包裹；如果是单词，加上星号
+    # If the keyword is a phrase, wrap it in quotation marks; if it is a word, add an asterisk
     if " " in keyword:
         return f'"{keyword}"'
     else:
         return f"{keyword}*"
 
+
 def query():
+    print("Enter keywords according to the following orders, and the search query will be generated.")
+    print("Enter groups of synonyms separated by commas. Press 'ENTER' without typing anything to finish.")
+    print("An OR relationship will be set between words within one synonyms group.")
+    print("An AND relationship will be set between different synonyms groups.")
+
     synonym_groups = []
 
     while True:
-        user_input = input("Enter a group of synonyms (comma-separated), or press 'ENTER' without typing anything to finish: ")
-        
+        user_input = input("\nEnter a group of synonyms: ")
+
         if user_input.lower() == '':
             break
 
         keywords = [word.strip() for word in user_input.split(",")]
-        
+
         formatted_keywords = [format_keyword(keyword) for keyword in keywords]
         current_group = f"({' OR '.join(formatted_keywords)})"
         synonym_groups.append(current_group)
 
-    # 输出同义词组，用AND连接
+    # Output synonymous phrases and connect them with AND
     if synonym_groups:
-        print("Query:")
+        print("\nQuery:")
         print(" AND ".join(synonym_groups))
     else:
         print("No input query found.")
