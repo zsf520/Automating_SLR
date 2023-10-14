@@ -25,6 +25,7 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
         publication_types = [map_entry_type(t.strip().lower()) for t in types_input.split(',')] if types_input else None
 
     # Open CSV file for writing
+    print("\nProcessing. Please wait...")
     with open(csv_file_path, 'w', encoding='utf-8-sig', newline='') as csv_file:
         # Create a CSV writer, specify the quotation mark rule as csv.QUOTE_MINIMAL, and set the escape character to
         # double quotation marks
@@ -68,3 +69,4 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
                     duplicate_count += 1
 
     print(f"\nDetected and removed {duplicate_count} duplicate entries.")
+    print("Processing complete.")
