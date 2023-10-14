@@ -1,5 +1,5 @@
-from query import *
-from bib_to_csv import *
+from modules.query import *
+from modules.bib_to_csv import *
 
 if __name__ == "__main__":
     query()
