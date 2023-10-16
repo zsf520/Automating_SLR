@@ -3,7 +3,7 @@ def format_keyword(keyword):
     if " " in keyword:
         return f'"{keyword}"'
     else:
-        return f"{keyword}*"
+        return f"{keyword}"
 
 
 def query():
