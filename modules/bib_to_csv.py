@@ -48,15 +48,15 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
 
             # Traverse each filtered item and write the required fields to the CSV file
             for entry in filtered_entries:
-                # Get the value of the required field, or an empty string if the field does not exist
-                title = entry.get('title', '')
-                abstract = entry.get('abstract', '')
-                authors = entry.get('author', '')
-                keywords = entry.get('keywords', '')
-                doi = entry.get('doi', '')
-                pub_date = entry.get('year', '')
-                pages = entry.get('pages', '')
-                entry_type = entry.get('entry_type', '')
+                # Get the value of the required field, or 'No data' if the field does not exist
+                title = entry.get('title', 'No data')
+                abstract = entry.get('abstract', 'No data')
+                authors = entry.get('author', 'No data')
+                keywords = entry.get('keywords', 'No data')
+                doi = entry.get('doi', 'No data')
+                pub_date = entry.get('year', 'No data')
+                pages = entry.get('pages', 'No data')
+                entry_type = entry.get('entry_type', 'No data')
 
                 # Use title and author information to determine whether the entry has been processed to prevent
                 # duplication
