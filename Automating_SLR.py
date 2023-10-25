@@ -17,7 +17,10 @@ if __name__ == "__main__":
     # Specify the output CSV file path
     output_csv = './output/output.csv'
 
+    # 获取用户输入的出版类型，允许多个，用逗号分隔
+    publication_types = choose_publication_types(bib_folder)
+
     # Call the processing function, remove duplicates and generate CSV, and apply filtering conditions
-    bib_to_csv(bib_files, output_csv)
+    bib_to_csv(bib_files, output_csv, publication_types=publication_types)
 
     input("\nPress 'ENTER' to exit...")

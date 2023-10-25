@@ -3,6 +3,35 @@ import csv
 from modules.filter import *
 
 
+def get_unique_publication_types(bib_file_paths):
+    unique_types = set()
+
+    for bib_file_path in bib_file_paths:
+        with open(bib_file_path, 'r', encoding=detect_encoding(bib_file_path), errors='replace') as bib_file:
+            bib_database = bibtexparser.load(bib_file)
+            for entry in bib_database.entries:
+                entry_type = entry.get('ENTRYTYPE', '').lower()
+                unique_types.add(entry_type)
+
+    return list(unique_types)
+
+def choose_publication_types(bib_folder):
+    bib_files = list_bib_files(bib_folder)
+    unique_publication_types = get_unique_publication_types(bib_files)
+
+    if not unique_publication_types:
+        print("No publication types found.")
+        return None
+
+    print("\nAvailable Publication Types:")
+    for index, entry_type in enumerate(unique_publication_types, start=1):
+        print(f"{index}. {entry_type}")
+
+    selection = input("Enter the number(s) of the publication type(s) you want to include (comma-separated): ")
+    selected_types = [unique_publication_types[int(idx) - 1] for idx in selection.split(',') if 1 <= int(idx) <= len(unique_publication_types)]
+
+    return selected_types
+
 def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, publication_types=None):
     unique_entries = set()  # Used to track items that have been processed
     duplicate_count = 0
@@ -60,7 +89,7 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
 
                 # Use title and author information to determine whether the entry has been processed to prevent
                 # duplication
-                entry_identifier = f"{title}_{authors}"
+                entry_identifier = f"{title.lower()}_{authors.lower()}"
                 if entry_identifier not in unique_entries:
                     # Write to CSV file
                     csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
