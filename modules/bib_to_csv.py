@@ -15,6 +15,7 @@ def get_unique_publication_types(bib_file_paths):
 
     return list(unique_types)
 
+
 def choose_publication_types(bib_folder):
     bib_files = list_bib_files(bib_folder)
     unique_publication_types = get_unique_publication_types(bib_files)
@@ -27,12 +28,15 @@ def choose_publication_types(bib_folder):
     for index, entry_type in enumerate(unique_publication_types, start=1):
         print(f"{index}. {entry_type}")
 
-    selection = input("Enter the number(s) of the publication type(s) you want to include (comma-separated): ")
-    selected_types = [unique_publication_types[int(idx) - 1] for idx in selection.split(',') if 1 <= int(idx) <= len(unique_publication_types)]
+    selection = input("\nEnter the number(s) of the publication type(s) you want to include (comma-separated): ")
+    selected_types = [unique_publication_types[int(idx) - 1] for idx in selection.split(',') if
+                      1 <= int(idx) <= len(unique_publication_types)]
 
     return selected_types
 
-def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, publication_types=None):
+
+def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
+               start_date=None, end_date=None, publication_types=None):
     unique_entries = set()  # Used to track items that have been processed
     duplicate_count = 0
 
@@ -46,6 +50,17 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
         max_pages_input = input(
             "\nEnter the maximum page limit (Press 'ENTER' without typing anything to have no limit):").strip()
         max_pages = int(max_pages_input) if max_pages_input else None
+
+    # Get user input for publication date restrictions
+    if start_date is None:
+        start_date_input = input(
+            "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no limit):").strip()
+        start_date = int(start_date_input) if start_date_input.isdigit() else None
+
+    if end_date is None:
+        end_date_input = input(
+            "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no limit):").strip()
+        end_date = int(end_date_input) if end_date_input.isdigit() else None
 
     # Get the publication type entered by the user, multiple are allowed, separated by commas
     if publication_types is None:
@@ -74,6 +89,8 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None, pu
 
             # Use filter_entries function to filter
             filtered_entries = filter_entries(bib_database.entries, min_pages, max_pages, publication_types)
+            # Use the new filter_by_publication_date function
+            filtered_entries = filter_by_publication_date(filtered_entries, start_date, end_date)
 
             # Traverse each filtered item and write the required fields to the CSV file
             for entry in filtered_entries:

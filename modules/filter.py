@@ -1,4 +1,5 @@
 from modules.bibread import *
+import datetime
 
 
 def map_entry_type(entry_type):
@@ -15,6 +16,25 @@ def map_entry_type(entry_type):
         return type_mapping[lower_entry_type]
 
     return entry_type
+
+
+def filter_by_publication_date(entries, start_date=None, end_date=None):
+    filtered_entries = []
+
+    for entry in entries:
+        # Extract publication date from the entry
+        pub_date = extract_publication_date(entry)
+
+        # Check if the publication date is within the specified range
+        date_condition = (
+            (start_date is None or (pub_date is not None and pub_date >= start_date)) and
+            (end_date is None or (pub_date is not None and pub_date <= end_date))
+        )
+
+        if date_condition:
+            filtered_entries.append(entry)
+
+    return filtered_entries
 
 
 def filter_entries(entries, min_pages=None, max_pages=None, publication_types=None):

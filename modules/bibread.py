@@ -34,3 +34,11 @@ def extract_page_number(entry):
 
     # If the 'pages' field does not exist or cannot be parsed, return "No data"
     return "No data"
+
+
+def extract_publication_date(entry):
+    # Extract publication date from the 'year' field
+    year = entry.get('year', '')
+    if year.isdigit():
+        return int(year)
+    return None

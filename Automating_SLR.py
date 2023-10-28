@@ -2,11 +2,11 @@ from modules.query import *
 from modules.bib_to_csv import *
 
 if __name__ == "__main__":
-    query()
+    generate_query()
 
     # Pause and wait for user input
     input("\nCopy Query to search in ODLs, export the results as BibTex files, and put the BibTex files into the "
-          "‘bibfiles’ folder, then press Enter to continue")
+          "‘bibfiles’ folder, then press Enter to start analysis")
 
     # Specify the folder where the BibTeX file is located
     bib_folder = './bibfiles'
