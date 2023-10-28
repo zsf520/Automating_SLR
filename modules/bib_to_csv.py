@@ -128,5 +128,5 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
                 else:
                     duplicate_count += 1
 
-    # print(f"\nDetected and removed {duplicate_count} duplicate entries.")
+    print(f"\nDetected and removed {duplicate_count} duplicate entries.")
     print("\nThe result file has been created in 'output' folder.")
