@@ -8,6 +8,8 @@ if __name__ == "__main__":
     input("\nCopy Query to search in ODLs, export the results as BibTex files, and put the BibTex files into the "
           "‘bibfiles’ folder, then press Enter to start analysis")
 
+    print("\nProcessing. Please wait...")
+
     # Specify the folder where the BibTeX file is located
     bib_folder = './bibfiles'
 

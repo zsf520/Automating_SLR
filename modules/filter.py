@@ -1,22 +1,6 @@
 from modules.bibread import *
 
 
-def map_entry_type(entry_type):
-    # Map the user input type to the corresponding BibTeX type
-    type_mapping = {
-        'journal': 'article',
-        'conference': 'inproceedings'
-        # Add other types of mappings
-    }
-
-    # Handle direct input of "journal" or "conference"
-    lower_entry_type = entry_type.lower()
-    if lower_entry_type in type_mapping:
-        return type_mapping[lower_entry_type]
-
-    return entry_type
-
-
 def filter_by_publication_date(entries, start_date=None, end_date=None):
     filtered_entries = []
 

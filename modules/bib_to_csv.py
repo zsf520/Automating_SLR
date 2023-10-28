@@ -24,16 +24,17 @@ def choose_publication_types(bib_folder):
         print("No publication types found.")
         return None
 
-    print("Available Publication Types:")
+    print("\nAvailable Publication Types:")
     for index, entry_type in enumerate(unique_publication_types, start=1):
         print(f"{index}. {entry_type}")
 
     while True:
         selection = input(
-            "Enter the number(s) of the publication type(s) you want to include (comma-separated), "
+            "\nEnter the number(s) of the publication type(s) you want to include (comma-separated), "
             "or press Enter to include all types: ")
 
         if not selection:
+            print("Selected all.")
             return unique_publication_types
 
         try:
@@ -57,11 +58,13 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
         min_pages_input = input(
             "\nEnter the minimum page limit (Press 'ENTER' without typing anything to have no limit):").strip()
         min_pages = int(min_pages_input) if min_pages_input else None
+        print("No limit" if min_pages is None else '')
 
     if max_pages is None:
         max_pages_input = input(
             "\nEnter the maximum page limit (Press 'ENTER' without typing anything to have no limit):").strip()
         max_pages = int(max_pages_input) if max_pages_input else None
+        print("No limit" if max_pages is None else '')
 
     # Get user input for publication date restrictions
     if start_date is None:
@@ -69,18 +72,14 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
             "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no "
             "limit):").strip()
         start_date = int(start_date_input) if start_date_input.isdigit() else None
+        print("No limit" if start_date is None else '')
 
     if end_date is None:
         end_date_input = input(
             "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no "
             "limit):").strip()
         end_date = int(end_date_input) if end_date_input.isdigit() else None
-
-    # Get the publication type entered by the user, multiple are allowed, separated by commas
-    if publication_types is None:
-        types_input = input("\nEnter publication type limits (Press 'ENTER' without typing anything to have no limit, "
-                            "separate multiple types with commas):")
-        publication_types = [map_entry_type(t.strip().lower()) for t in types_input.split(',')] if types_input else None
+        print("No limit" if end_date is None else '')
 
     # Open CSV file for writing
     print("\nProcessing. Please wait...")
