@@ -24,15 +24,27 @@ def choose_publication_types(bib_folder):
         print("No publication types found.")
         return None
 
-    print("\nAvailable Publication Types:")
+    print("Available Publication Types:")
     for index, entry_type in enumerate(unique_publication_types, start=1):
         print(f"{index}. {entry_type}")
 
-    selection = input("\nEnter the number(s) of the publication type(s) you want to include (comma-separated): ")
-    selected_types = [unique_publication_types[int(idx) - 1] for idx in selection.split(',') if
-                      1 <= int(idx) <= len(unique_publication_types)]
+    while True:
+        selection = input(
+            "Enter the number(s) of the publication type(s) you want to include (comma-separated), "
+            "or press Enter to include all types: ")
 
-    return selected_types
+        if not selection:
+            return unique_publication_types
+
+        try:
+            selected_indices = [int(idx) for idx in selection.split(',')]
+            if all(1 <= idx <= len(unique_publication_types) for idx in selected_indices):
+                selected_types = [unique_publication_types[idx - 1] for idx in selected_indices]
+                return selected_types
+            else:
+                print("Invalid input. Please enter valid numbers within the listed range.")
+        except ValueError:
+            print("Invalid input. Please enter valid numbers separated by commas.")
 
 
 def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
@@ -54,12 +66,14 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
     # Get user input for publication date restrictions
     if start_date is None:
         start_date_input = input(
-            "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no limit):").strip()
+            "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no "
+            "limit):").strip()
         start_date = int(start_date_input) if start_date_input.isdigit() else None
 
     if end_date is None:
         end_date_input = input(
-            "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no limit):").strip()
+            "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no "
+            "limit):").strip()
         end_date = int(end_date_input) if end_date_input.isdigit() else None
 
     # Get the publication type entered by the user, multiple are allowed, separated by commas

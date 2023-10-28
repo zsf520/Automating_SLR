@@ -12,7 +12,7 @@ def query():
     print("An OR relationship will be set between words within one keywords group.")
     print("An AND relationship will be set between different keywords groups.")
     print("Choose 6 to end entering.")
-    # Prompt user to choose a label or end input
+    # Prompt user to choose a search field or end input
     print("\nChoose a search field number or enter '6' to finish:")
     for i, option in enumerate(label_options, 1):
         print(f"{i}. {option}")
@@ -36,14 +36,16 @@ def query():
                 print("Invalid search field number. Please choose a number from the list.")
                 continue
 
-            # Prompt user to enter keywords for the selected label
-            keywords_input = input(f"Enter keywords for '{user_friendly_label}': ")
+            # Prompt user to enter keywords for the selected search field
+            while True:
+                keywords_input = input(f"\nEnter keywords for '{user_friendly_label}': ")
+
+                if keywords_input.strip():  # Check if input is not empty
+                    break
+                else:
+                    print("Invalid input. Keywords cannot be empty. Please enter at least one keyword.")
 
             keywords = [word.strip() for word in keywords_input.split(",")]
-
-            if not keywords:
-                print("Invalid input. Please enter at least one keyword.")
-                continue
 
             # Create a dictionary for the current batch and update it with the label and keywords
             current_batch = {'label': user_friendly_label, 'keywords': keywords}

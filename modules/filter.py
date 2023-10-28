@@ -1,5 +1,4 @@
 from modules.bibread import *
-import datetime
 
 
 def map_entry_type(entry_type):
