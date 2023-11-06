@@ -121,24 +121,20 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
                 # Use title and author information to determine whether the entry has been processed to prevent
                 # duplication
                 entry_doi = f"{doi.lower()}"
+                entry_identifier = f"{title.lower()}_{authors.lower()}"
                 if entry_doi == 'no data':
-                    entry_identifier = f"{title.lower()}_{authors.lower()}"
                     if entry_identifier not in unique_entries:
                         # Write to CSV file
                         csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
                         unique_entries.add(entry_identifier)
-                elif entry_doi not in unique_doi:
-                    entry_identifier = f"{title.lower()}_{authors.lower()}"
-                    if entry_identifier not in unique_entries:
-                        # Write to CSV file
-                        csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
-                        unique_entries.add(entry_identifier)
-                        unique_doi.add(entry_doi)
                     else:
                         duplicate_count += 1
+                elif entry_doi not in unique_doi:
+                    # Write to CSV file
+                    csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
+                    unique_doi.add(entry_doi)
                 else:
                     duplicate_count += 1
-
 
     print(f"\nDetected and removed {duplicate_count} duplicate entries.")
     print("\nThe result file has been created in 'output' folder.")
