@@ -51,6 +51,7 @@ def choose_publication_types(bib_folder):
 def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
                start_date=None, end_date=None, publication_types=None):
     unique_entries = set()  # Used to track items that have been processed
+    unique_doi = set()
     duplicate_count = 0
 
     # Get the upper and lower limits of the number of pages entered by the user
@@ -108,10 +109,10 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
             # Traverse each filtered item and write the required fields to the CSV file
             for entry in filtered_entries:
                 # Get the value of the required field, or 'No data' if the field does not exist
-                title = entry.get('title', 'No data')
-                abstract = entry.get('abstract', 'No data')
-                authors = entry.get('author', 'No data')
-                keywords = entry.get('keywords', 'No data')
+                title = entry.get('title', 'No data').replace('\n', ' ')
+                abstract = entry.get('abstract', 'No data').replace('\n', ' ')
+                authors = entry.get('author', 'No data').replace('\n', ' ')
+                keywords = entry.get('keywords', 'No data').replace('\n', ' ')
                 doi = entry.get('doi', 'No data')
                 pub_date = entry.get('year', 'No data')
                 pages = entry.get('pages', 'No data')
@@ -119,13 +120,25 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
 
                 # Use title and author information to determine whether the entry has been processed to prevent
                 # duplication
-                entry_identifier = f"{title.lower()}_{authors.lower()}"
-                if entry_identifier not in unique_entries:
-                    # Write to CSV file
-                    csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
-                    unique_entries.add(entry_identifier)
+                entry_doi = f"{doi.lower()}"
+                if entry_doi == 'no data':
+                    entry_identifier = f"{title.lower()}_{authors.lower()}"
+                    if entry_identifier not in unique_entries:
+                        # Write to CSV file
+                        csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
+                        unique_entries.add(entry_identifier)
+                elif entry_doi not in unique_doi:
+                    entry_identifier = f"{title.lower()}_{authors.lower()}"
+                    if entry_identifier not in unique_entries:
+                        # Write to CSV file
+                        csv_writer.writerow([entry_type, title, abstract, authors, keywords, doi, pub_date, pages])
+                        unique_entries.add(entry_identifier)
+                        unique_doi.add(entry_doi)
+                    else:
+                        duplicate_count += 1
                 else:
                     duplicate_count += 1
+
 
     print(f"\nDetected and removed {duplicate_count} duplicate entries.")
     print("\nThe result file has been created in 'output' folder.")
