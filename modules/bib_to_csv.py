@@ -56,31 +56,73 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
 
     # Get the upper and lower limits of the number of pages entered by the user
     if min_pages is None:
-        min_pages_input = input(
-            "\nEnter the minimum page limit (Press 'ENTER' without typing anything to have no limit):").strip()
-        min_pages = int(min_pages_input) if min_pages_input else None
-        print("No limit" if min_pages is None else '')
+        while True:
+            min_pages_input = input(
+                "\nEnter the minimum page limit (Press 'ENTER' without typing anything to have no limit): ").strip()
+            if not min_pages_input:
+                min_pages = None
+                print("No limit")
+                break
+
+            try:
+                min_pages = int(min_pages_input)
+                if min_pages >= 0:
+                    break
+                else:
+                    print("Please enter a non-negative number.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
     if max_pages is None:
-        max_pages_input = input(
-            "\nEnter the maximum page limit (Press 'ENTER' without typing anything to have no limit):").strip()
-        max_pages = int(max_pages_input) if max_pages_input else None
-        print("No limit" if max_pages is None else '')
+        while True:
+            max_pages_input = input(
+                "\nEnter the maximum page limit (Press 'ENTER' without typing anything to have no limit): ").strip()
+            if not max_pages_input:
+                max_pages = None
+                print("No limit")
+                break
+
+            try:
+                max_pages = int(max_pages_input)
+                if max_pages >= 0:
+                    break
+                else:
+                    print("Please enter a non-negative number.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
     # Get user input for publication date restrictions
     if start_date is None:
-        start_date_input = input(
-            "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no "
-            "limit):").strip()
-        start_date = int(start_date_input) if start_date_input.isdigit() else None
-        print("No limit" if start_date is None else '')
+        while True:
+            start_date_input = input(
+                "\nEnter the start year for publication date limit (Press 'ENTER' without typing anything to have no "
+                "limit): ").strip()
+            if not start_date_input:
+                start_date = None
+                print("No limit")
+                break
+
+            if start_date_input.isdigit():
+                start_date = int(start_date_input)
+                break
+            else:
+                print("Invalid input. Please enter a valid year (a positive integer).")
 
     if end_date is None:
-        end_date_input = input(
-            "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no "
-            "limit):").strip()
-        end_date = int(end_date_input) if end_date_input.isdigit() else None
-        print("No limit" if end_date is None else '')
+        while True:
+            end_date_input = input(
+                "\nEnter the end year for publication date limit (Press 'ENTER' without typing anything to have no "
+                "limit): ").strip()
+            if not end_date_input:
+                end_date = None
+                print("No limit")
+                break
+
+            if end_date_input.isdigit():
+                end_date = int(end_date_input)
+                break
+            else:
+                print("Invalid input. Please enter a valid year (a positive integer).")
 
     # Open CSV file for writing
     print("\nProcessing. Please wait...")
@@ -137,4 +179,3 @@ def bib_to_csv(bib_file_paths, csv_file_path, min_pages=None, max_pages=None,
                     duplicate_count += 1
 
     print(f"\nDetected and removed {duplicate_count} duplicate entries.")
-    print("\nThe result file has been created in 'output' folder.")
