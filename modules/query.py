@@ -125,10 +125,6 @@ def generate_acm_query(synonym_batches):
     return final_query
 
 
-
-
-
-
 def generate_ieee_query(synonym_batches):
     """
     Process user-inputted synonym batches and generate a query based on IEEE Xplore syntax.
